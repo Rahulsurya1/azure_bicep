@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v3.5.2
  
       - name: azure view deployment changes
-        run: az deployment group what-if --resource-group newrg --template-file apim.bicep
+        run: az deployment group what-if --resource-group rg-01 --template-file iac.bicep
    
   DEV:
     runs-on: self-hosted
@@ -22,9 +22,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3.5.2
+        
+      - name: create resource group
+        run: az group create --name rg-01 --location eastus
  
       - name: create azure_vm in DEV ENV 
-        run: az deployment group create --resource-group newrg --template-file apim.bicep
+        run: az deployment group create --resource-group rg-01 --template-file apim.bicep
     
   
   QA:
@@ -36,18 +39,9 @@ jobs:
         uses: actions/checkout@v3.5.2
           
       - name: create azure_vm in DEV ENV 
-        run: az deployment group create --resource-group newrg --template-file apim.bicep
+        run: az deployment group create --resource-group rg-01 --template-file iac.bicep
       
-  Pre-pod:
-    runs-on: self-hosted
-    environment: Pre-pod
-    needs: QA
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3.5.2
-          
-      - name: create pre-prod folder
-        run: mkdir pre-prod
+ 
      
      
      
