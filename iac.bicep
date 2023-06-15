@@ -139,6 +139,19 @@ resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2021-05-0
           destinationPortRange: '22'
         }
       }
+      {
+        name: 'add-1'
+        properties: {
+          priority: 1100
+          protocol: 'Tcp'
+          access: 'Allow'
+          direction: 'Inbound'
+          sourceAddressPrefix: '*'
+          sourcePortRange: '*'
+          destinationAddressPrefix: '*'
+          destinationPortRange: '7090'
+        }
+      }
     ]
   }
 }
